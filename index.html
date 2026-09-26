@@ -34,13 +34,13 @@ footer{background:var(--deep);color:#f5eee4;padding:55px 26px}.footin{max-width:
 <body>
 <header class="nav"><div class="navin">
 <a class="brand" href="#home">MOKA<span>COFFEE & BRUNCH</span></a>
-<nav class="links"><a href="#menu">Menu</a><a href="#about">Our story</a><a href="#reserve">Reservations</a><a href="#contact">Contact</a></nav>
+<nav class="links"><a href="#menu">Menu</a><a href="#about">Our story</a><a href="#menu">Reservations</a><a href="#contact">Contact</a></nav>
 <button class="navcart" onclick="openCart()">Cart · <span id="cartCount">0</span></button>
 </div></header>
 
 <main id="home">
 <section class="hero">
-<div><div class="eyebrow">COFFEE · BRUNCH · GOOD MOOD</div><h1>Good coffee.<br><em>Good food.</em><br>Good mood.</h1><p>Specialty coffee, fresh brunch & your everyday favorites — made for slow mornings and busy days.</p><div class="actions"><a class="btn" href="#menu">Explore the menu</a><a class="btn alt" href="#reserve">Reserve a table</a></div></div>
+<div><div class="eyebrow">COFFEE · BRUNCH · GOOD MOOD</div><h1>Good coffee.<br><em>Good food.</em><br>Good mood.</h1><p>Specialty coffee, fresh brunch & your everyday favorites — made for slow mornings and busy days.</p><div class="actions"><a class="btn" href="#menu">Explore the menu</a><a class="btn alt" href="#menu">Order</a></div></div>
 <div class="heroVisual"><div class="heroimg"></div><div class="stamp">Made for your kind of morning<small>COFFEE • FOOD • COMPANY</small></div></div>
 </section>
 <div class="strip"><div class="stripin"><span>☕ <b>Specialty coffee</b> all day</span><span>🥐 Fresh brunch made to order</span><span>🌿 Oat, almond & coconut milk</span><span>⌂ Pickup & delivery</span></div></div>
@@ -66,7 +66,7 @@ footer{background:var(--deep);color:#f5eee4;padding:55px 26px}.footin{max-width:
 <section class="section" id="contact"><div class="sectionHead"><div><div class="eyebrow">COME SAY HI</div><h2>We'd love to hear from you.</h2></div></div><div class="contactGrid"><div class="contactCard"><h3>Find MOKA</h3><p>123 Example Street<br>Thessaloniki, Greece</p><p><b>Every day</b><br>08:00 — 22:00</p><p>+30 2310 000 000<br>hello@moka.example</p></div><div class="contactCard"><h3>Have a question?</h3><p>Send us a message and our team will get back to you.</p><div class="formGrid"><div class="field"><label>Name</label><input id="cName"></div><div class="field"><label>Email</label><input id="cEmail" type="email"></div><div class="field full"><label>Message</label><textarea id="cMsg" rows="4"></textarea></div><div class="full"><button class="btn" onclick="sendContact()">Send message</button></div></div></div></div></section>
 </main>
 
-<footer><div class="footin"><div><div class="footBrand">MOKA</div><div class="footBrand" style="font-size:11px;letter-spacing:.22em">COFFEE & BRUNCH</div><p style="color:#cdbfae;max-width:390px">Specialty coffee, fresh brunch and a little more good mood in every visit.</p></div><div class="footlinks"><a href="#menu">Menu</a><a href="#reserve">Reservations</a><a href="#about">About</a><a href="#contact">Contact</a></div></div></footer>
+<footer><div class="footin"><div><div class="footBrand">MOKA</div><div class="footBrand" style="font-size:11px;letter-spacing:.22em">COFFEE & BRUNCH</div><p style="color:#cdbfae;max-width:390px">Specialty coffee, fresh brunch and a little more good mood in every visit.</p></div><div class="footlinks"><a href="#menu">Menu</a><a href="#menu">Reservations</a><a href="#about">About</a><a href="#contact">Contact</a></div></div></footer>
 
 <button class="floating" onclick="toggleChat()">Ask MOKA ✦</button>
 <div class="chat" id="chat"><div class="chatHead">Ask MOKA ✦ <span style="float:right;cursor:pointer" onclick="toggleChat()">×</span><div style="font-size:11px;font-weight:400;color:var(--muted)">Your little café assistant</div></div><div class="msgs" id="msgs"><div class="msg">Hi! I can help with the menu, vegan options, opening hours, reservations and pickup.</div></div><div class="chatInput"><input id="question" placeholder="Ask something..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">↑</button></div></div>
