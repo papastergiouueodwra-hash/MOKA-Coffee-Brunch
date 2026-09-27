@@ -69,7 +69,7 @@ footer{background:var(--deep);color:#f5eee4;padding:55px 26px}.footin{max-width:
 <footer><div class="footin"><div><div class="footBrand">MOKA</div><div class="footBrand" style="font-size:11px;letter-spacing:.22em">COFFEE & BRUNCH</div><p style="color:#cdbfae;max-width:390px">Specialty coffee, fresh brunch and a little more good mood in every visit.</p></div><div class="footlinks"><a href="#menu">Menu</a><a href="#menu">Reservations</a><a href="#about">About</a><a href="#contact">Contact</a></div></div></footer>
 
 <button class="floating" onclick="toggleChat()">Ask MOKA ✦</button>
-<div class="chat" id="chat"><div class="chatHead">Ask MOKA ✦ <span style="float:right;cursor:pointer" onclick="toggleChat()">×</span><div style="font-size:11px;font-weight:400;color:var(--muted)">Your little café assistant</div></div><div class="msgs" id="msgs"><div class="msg">Hi! I can help with the menu, vegan options, opening hours, reservations and pickup.</div></div><div class="chatInput"><input id="question" placeholder="Ask something..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">↑</button></div></div>
+<div class="chat" id="chat"><div class="chatHead">Ask MOKA ✦ <span style="float:right;cursor:pointer" onclick="toggleChat()">×</span><div style="font-size:11px;font-weight:400;color:var(--muted)">Your little café assistant</div></div><div class="msgs" id="msgs"><div class="msg">Γεια! Μπορώ να σε βοηθήσω με το μενού, τις επιλογές vegan, το ωράριο, τις κρατήσεις και τις παραγγελίες.</div></div><div class="chatInput"><input id="question" placeholder="Ask something..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">↑</button></div></div>
 
 <div class="modal" id="productModal"><div class="modalBox"><button class="close" onclick="closeModal('productModal')">×</button><div id="productContent"></div></div></div>
 <div class="modal" id="cartModal"><div class="modalBox"><button class="close" onclick="closeModal('cartModal')">×</button><h2>Your order</h2><p class="muted">Review your items before checkout.</p><div id="cartItems"></div><div id="cartTotal" style="margin-top:20px"></div><div class="modalActions"><button class="btn light" onclick="closeModal('cartModal')">Keep shopping</button><button class="btn alt" onclick="goCheckout()">Checkout</button></div></div></div>
@@ -152,13 +152,18 @@ function sendContact(){const n=document.getElementById("cName").value.trim();if(
 function toggleChat(){document.getElementById("chat").classList.toggle("open")}
 function ask(){
  const input=document.getElementById("question"),q=input.value.trim();if(!q)return;
- const l=q.toLowerCase(),m=document.getElementById("msgs");let a="I can help with our menu, vegan options, opening hours, reservations and pickup.";
- if(l.includes("vegan")||l.includes("milk"))a="Absolutely — oat, almond and coconut milk are available. Ask me about specific food items too.";
- else if(l.includes("freddo"))a="Our Freddo Cappuccino is €3.50.";
- else if(l.includes("hour")||l.includes("open"))a="We're open every day from 08:00 to 22:00.";
- else if(l.includes("reserve")||l.includes("table"))a="Of course! Use the Reservations section and choose your date, time and party size.";
- else if(l.includes("pickup")||l.includes("order"))a="Yes — you can order for pickup directly through the website.";
- m.innerHTML+=`<div class="msg me">${escapeHtml(q)}</div><div class="msg">${a}</div>`;m.scrollTop=m.scrollHeight;input.value="";
+ const l=q.toLowerCase(),m=document.getElementById("msgs");
+ let a="Μπορώ να σε βοηθήσω με το μενού, τις επιλογές vegan, το ωράριο, τις κρατήσεις και τις παραγγελίες.";
+ if(l.includes("vegan")||l.includes("βίγκαν")||l.includes("γάλα")||l.includes("milk"))a="Φυσικά! Διαθέτουμε γάλα βρώμης, αμυγδάλου και καρύδας. Αν θέλεις, μπορώ να σε βοηθήσω και με συγκεκριμένα πιάτα του μενού.";
+ else if(l.includes("freddo")||l.includes("φρέντο"))a="Το Freddo Cappuccino κοστίζει €3,50.";
+ else if(l.includes("hour")||l.includes("ωράριο")||l.includes("ανοιχτ")||l.includes("λειτουργ"))a="Είμαστε ανοιχτά καθημερινά, από τις 08:00 έως τις 22:00.";
+ else if(l.includes("reserve")||l.includes("κρατ")||l.includes("τραπέζ"))a="Βεβαίως! Μπορείς να κάνεις κράτηση από την ενότητα «Κρατήσεις», επιλέγοντας ημερομηνία, ώρα και αριθμό ατόμων.";
+ else if(l.includes("pickup")||l.includes("παραγγελ")||l.includes("delivery")||l.includes("παραλαβ"))a="Ναι! Μπορείς να κάνεις παραγγελία απευθείας από το website, για παραλαβή ή delivery.";
+ else if(l.includes("espresso")||l.includes("εσπρέσο"))a="Ο Espresso κοστίζει €2,20 και ο Double Espresso €2,80.";
+ else if(l.includes("pancake")||l.includes("πανκέικ"))a="Τα Pancakes κοστίζουν €8,50 και σερβίρονται με berries, maple syrup και κρέμα.";
+ else if(l.includes("menu")||l.includes("μενού"))a="Μπορείς να δεις όλο το μενού στην ενότητα «Menu», με καφέδες, cold drinks, brunch, snacks και desserts.";
+ m.innerHTML+='<div class="msg me">'+escapeHtml(q)+'</div><div class="msg">'+a+'</div>';
+ m.scrollTop=m.scrollHeight;input.value="";
 }
 function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]))}
 function closeModal(id){document.getElementById(id).classList.remove("open")}
