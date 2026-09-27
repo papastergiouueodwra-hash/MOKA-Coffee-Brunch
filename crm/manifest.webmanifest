@@ -1,0 +1,14 @@
+{
+  "name":"MOKA Manager",
+  "short_name":"MOKA Manager",
+  "start_url":"/crm/",
+  "scope":"/crm/",
+  "display":"standalone",
+  "background_color":"#f6efe4",
+  "theme_color":"#3f332a",
+  "description":"MOKA Coffee & Brunch Manager",
+  "icons":[
+    {"src":"/crm/icon.svg","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},
+    {"src":"/crm/icon.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
