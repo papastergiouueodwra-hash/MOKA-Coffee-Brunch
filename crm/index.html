@@ -33,8 +33,8 @@ const PRODUCTS=[
 {id:1,name:"Espresso",cat:"Coffee",price:2.20},{id:2,name:"Double Espresso",cat:"Coffee",price:2.80},{id:3,name:"Cappuccino",cat:"Coffee",price:3.20},{id:4,name:"Freddo Cappuccino",cat:"Cold drinks",price:3.50},{id:5,name:"Iced Latte",cat:"Cold drinks",price:3.80},{id:6,name:"Cold Brew",cat:"Cold drinks",price:4.00},{id:7,name:"Avocado Toast",cat:"Brunch",price:7.90},{id:8,name:"Pancakes",cat:"Brunch",price:8.50},{id:9,name:"Eggs Benedict",cat:"Brunch",price:9.50},{id:10,name:"Club Sandwich",cat:"Snacks",price:8.90},{id:11,name:"Croissant",cat:"Snacks",price:2.80},{id:12,name:"Cheesecake",cat:"Desserts",price:5.20}];
 let state=JSON.parse(localStorage.getItem("mokaMenuAvailability")||"{}"),cat="All",orderFilter="All";let remoteOrders=[];
 const viewNames={dashboard:"Overview of your café operations.",orders:"Manage incoming customer orders.",reservations:"Manage table reservations.",customers:"Customer information and history.",menu:"Έλεγχος λειτουργίας και διαθεσιμότητας μενού."};
-function getOrders(){try{return JSON.parse(localStorage.getItem("mokaOrders")||"[]")}catch(e){return []}}
-function saveOrders(a){localStorage.setItem("mokaOrders",JSON.stringify(a))}
+function getOrders(){return remoteOrders}
+async function loadOrders(){try{const r=await fetch("/api/orders",{cache:"no-store"});if(!r.ok)throw new Error("Orders API "+r.status);remoteOrders=await r.json();renderOrders();renderDashboard()}catch(e){console.error("MOKA orders load failed",e)}}
 function euro(n){return "€"+Number(n||0).toFixed(2).replace(".",",")}
 function showView(name){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(name+"View").classList.add("active");document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===name));document.getElementById("pageSub").textContent=viewNames[name]||"";if(name==="orders")renderOrders();if(name==="dashboard")renderDashboard();if(name==="menu")render()}
 document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
@@ -55,6 +55,6 @@ function render(){
 }
 function toggle(id){state[id]=!isAvailable(id);save();render()}
 function setupFilters(){const cats=["All","Coffee","Cold drinks","Brunch","Snacks","Desserts"];document.getElementById("filters").innerHTML=cats.map(x=>'<button class="filter '+(x===cat?"active":"")+'" onclick="cat=\''+x+'\';setupFilters();render()">'+x+'</button>').join("")}
-document.getElementById("search").addEventListener("input",render);document.getElementById("orderSearch").addEventListener("input",renderOrders);window.addEventListener("storage",e=>{if(e.key==="mokaOrders"){renderOrders();renderDashboard()}});window.addEventListener("focus",()=>{renderOrders();renderDashboard()});setInterval(loadOrders,5000);setupFilters();render();loadOrders();renderDashboard();
+document.getElementById("search").addEventListener("input",render);document.getElementById("orderSearch").addEventListener("input",renderOrders);window.addEventListener("focus",()=>{loadOrders()});setInterval(loadOrders,5000);setupFilters();render();renderDashboard();loadOrders();
 </script>
 </body></html>
