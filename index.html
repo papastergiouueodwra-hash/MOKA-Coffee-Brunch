@@ -34,7 +34,7 @@ footer{background:var(--deep);color:#f5eee4;padding:55px 26px}.footin{max-width:
 <body>
 <header class="nav"><div class="navin">
 <a class="brand" href="#home">MOKA<span>COFFEE & BRUNCH</span></a>
-<nav class="links"><a href="#menu">Menu</a><a href="#about">Our story</a><a href="#menu">Reservations</a><a href="#contact">Contact</a><a href="#" onclick="event.preventDefault();toggleChat()">Ask MOKA</a></nav>
+<nav class="links"><a href="#menu">Menu</a><a href="#about">Our story</a><a href="#menu">Order</a><a href="#contact">Contact</a><a href="#" onclick="event.preventDefault();toggleChat()">Ask MOKA</a></nav>
 <button class="navcart" onclick="openCart()">Cart · <span id="cartCount">0</span></button>
 </div></header>
 
@@ -57,11 +57,6 @@ footer{background:var(--deep);color:#f5eee4;padding:55px 26px}.footin{max-width:
 </div></section>
 
 <section class="section" id="about"><div class="split"><div class="aboutImg"></div><div class="copy"><div class="eyebrow">OUR STORY</div><h2>A cozy place for good days.</h2><p>MOKA is an indicative coffee & brunch concept built around a simple idea: good coffee tastes better when you have somewhere you actually want to stay.</p><p>Warm interiors, fresh food, thoughtful coffee and an easy digital experience — everything should feel simple, welcoming and a little bit special.</p><div class="quote">“Come for the coffee. Stay for the mood.”</div></div></div></section>
-
-<section class="section" id="reserve">
-<div class="sectionHead"><div><div class="eyebrow">YOUR TABLE</div><h2>Let's save you a seat.</h2></div><p>Choose your date, time and party size. We'll show you available times before you confirm.</p></div>
-<div class="resWrap"><div class="formGrid"><div class="field"><label>Date</label><input id="rDate" type="date"></div><div class="field"><label>Preferred time</label><select id="rTime"><option>10:00</option><option>11:30</option><option>13:00</option><option>17:30</option><option>19:00</option><option>20:30</option></select></div><div class="field"><label>Guests</label><select id="rGuests"><option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7 guests</option><option>8 guests</option></select></div><div class="field"><label>Name</label><input id="rName" placeholder="Your name"></div><div class="field"><label>Phone</label><input id="rPhone" placeholder="+30"></div><div class="field"><label>Email</label><input id="rEmail" type="email" placeholder="you@example.com"></div><div class="field full"><label>Special request</label><textarea id="rNote" rows="3" placeholder="Birthday, outdoor table, allergies..."></textarea></div><div class="full"><button class="btn alt" onclick="reserve()">Check availability & continue</button></div></div></div>
-</section>
 
 <section class="section" id="contact"><div class="sectionHead"><div><div class="eyebrow">COME SAY HI</div><h2>We'd love to hear from you.</h2></div></div><div class="contactGrid"><div class="contactCard"><h3>Find MOKA</h3><p>123 Example Street<br>Thessaloniki, Greece</p><p><b>Every day</b><br>08:00 — 22:00</p><p>+30 2310 000 000<br>hello@moka.example</p></div><div class="contactCard"><h3>Have a question?</h3><p>Send us a message and our team will get back to you.</p><div class="formGrid"><div class="field"><label>Name</label><input id="cName"></div><div class="field"><label>Email</label><input id="cEmail" type="email"></div><div class="field full"><label>Message</label><textarea id="cMsg" rows="4"></textarea></div><div class="full"><button class="btn" onclick="sendContact()">Send message</button></div></div></div></div></section>
 </main>
