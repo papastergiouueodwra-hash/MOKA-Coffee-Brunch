@@ -59,6 +59,6 @@ function render(){
 }
 function toggle(id){state[id]=!isAvailable(id);save();render()}
 function setupFilters(){const cats=["All","Coffee","Cold drinks","Brunch","Snacks","Desserts"];document.getElementById("filters").innerHTML=cats.map(x=>'<button class="filter '+(x===cat?"active":"")+'" onclick="cat=\''+x+'\';setupFilters();render()">'+x+'</button>').join("")}
-document.getElementById("search").addEventListener("input",render);document.getElementById("orderSearch").addEventListener("input",renderOrders);window.addEventListener("focus",()=>{loadOrders()});setInterval(loadOrders,5000);setupFilters();render();renderDashboard();loadOrders();
+document.getElementById("search").addEventListener("input",render);document.getElementById("orderSearch").addEventListener("input",renderOrders);window.addEventListener("focus",()=>{loadOrders()});setInterval(loadOrders,5000);setInterval(loadRequests,5000);setupFilters();render();renderDashboard();loadOrders();loadRequests();
 </script>
 </body></html>
