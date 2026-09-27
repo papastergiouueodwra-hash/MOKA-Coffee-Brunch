@@ -55,6 +55,6 @@ function render(){
 }
 function toggle(id){state[id]=!isAvailable(id);save();render()}
 function setupFilters(){const cats=["All","Coffee","Cold drinks","Brunch","Snacks","Desserts"];document.getElementById("filters").innerHTML=cats.map(x=>'<button class="filter '+(x===cat?"active":"")+'" onclick="cat=\''+x+'\';setupFilters();render()">'+x+'</button>').join("")}
-document.getElementById("search").addEventListener("input",render);document.getElementById("orderSearch").addEventListener("input",renderOrders);window.addEventListener("storage",e=>{if(e.key==="mokaOrders"){renderOrders();renderDashboard()}});window.addEventListener("focus",()=>{renderOrders();renderDashboard()});setupFilters();render();renderOrders();renderDashboard();
+document.getElementById("search").addEventListener("input",render);document.getElementById("orderSearch").addEventListener("input",renderOrders);window.addEventListener("storage",e=>{if(e.key==="mokaOrders"){renderOrders();renderDashboard()}});window.addEventListener("focus",()=>{renderOrders();renderDashboard()});setInterval(()=>{renderOrders();renderDashboard()},1000);setupFilters();render();renderOrders();renderDashboard();
 </script>
 </body></html>
