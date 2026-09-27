@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MOKA Manager</title>
+<style>
+:root{--cream:#f6efe4;--paper:#fffaf3;--beige:#e9dccb;--brown:#665243;--deep:#3f332a;--olive:#a9b28a;--olive-dark:#697253;--line:#d9c9b7;--muted:#89796a}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--deep);font-family:Inter,Arial,sans-serif}.app{min-height:100vh;display:flex}.side{width:240px;background:var(--deep);color:#fffaf3;padding:28px 18px;position:fixed;inset:0 auto 0 0}.brand{font:italic 700 30px Georgia,serif;margin:0 12px 34px}.nav button{width:100%;border:0;background:transparent;color:#eadfd2;text-align:left;padding:13px 14px;border-radius:12px;font-size:15px;cursor:pointer}.nav button.active,.nav button:hover{background:#5b493d;color:white}.main{margin-left:240px;width:calc(100% - 240px);padding:34px;max-width:1400px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}.title{font:400 42px Georgia,serif;margin:5px 0}.sub{color:var(--muted);margin:0}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 25px #5d4b3910}.stat-label{font-size:13px;color:var(--muted)}.stat-value{font:700 30px Georgia,serif;margin-top:8px}.section{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:24px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.section h2{font:400 25px Georgia,serif;margin:0}.search{border:1px solid var(--line);background:#fffdf8;border-radius:10px;padding:10px 12px;min-width:220px}.filters{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:transparent;border-radius:999px;padding:8px 14px;cursor:pointer;color:var(--brown)}.filter.active{background:var(--olive);border-color:var(--olive);color:#fff}.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.item{display:flex;align-items:center;justify-content:space-between;gap:18px;border:1px solid var(--line);border-radius:15px;padding:16px;background:#fffdf8}.left{display:flex;gap:14px;align-items:center}.dot{width:12px;height:12px;border-radius:50%;background:#8eaa73}.dot.off{background:#b77c70}.name{font-weight:700}.meta{font-size:13px;color:var(--muted);margin-top:4px}.price{font-weight:700;margin-right:14px}.toggle{border:0;border-radius:999px;padding:9px 13px;cursor:pointer;font-weight:700;background:#dce6cf;color:#51613c}.toggle.off{background:#ead4cf;color:#875a52}.status{font-size:12px}.empty{padding:35px;text-align:center;color:var(--muted)}@media(max-width:900px){.side{width:190px}.main{margin-left:190px;width:calc(100% - 190px);padding:22px}.stats{grid-template-columns:repeat(2,1fr)}.menu-grid{grid-template-columns:1fr}}@media(max-width:620px){.side{position:static;width:100%;height:auto}.app{display:block}.main{margin:0;width:100%}.stats{grid-template-columns:1fr 1fr}.top{align-items:flex-start}.title{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side"><div class="brand">MOKA</div><div class="nav"><button class="active">Dashboard</button><button>Orders</button><button>Reservations</button><button>Customers</button><button>Menu</button></div></aside>
+<main class="main">
+<div class="top"><div><div class="eyebrow">MOKA Coffee & Brunch</div><h1 class="title">Manager</h1><p class="sub">Έλεγχος λειτουργίας και διαθεσιμότητας μενού.</p></div></div>
+<div class="stats"><div class="card"><div class="stat-label">Σύνολο προϊόντων</div><div class="stat-value" id="total">0</div></div><div class="card"><div class="stat-label">Διαθέσιμα</div><div class="stat-value" id="available">0</div></div><div class="card"><div class="stat-label">Μη διαθέσιμα</div><div class="stat-value" id="unavailable">0</div></div><div class="card"><div class="stat-label">Κατάσταση</div><div class="stat-value" style="font-size:22px">Live Menu</div></div></div>
+<section class="section"><div class="section-head"><div><h2>Menu Management</h2></div><input id="search" class="search" placeholder="Αναζήτηση προϊόντος..."></div><div class="filters" id="filters"></div><div class="menu-grid" id="menu"></div></section>
+</main></div>
+<script>
+const PRODUCTS=[
+{id:1,name:"Espresso",cat:"Coffee",price:2.20},{id:2,name:"Double Espresso",cat:"Coffee",price:2.80},{id:3,name:"Cappuccino",cat:"Coffee",price:3.20},{id:4,name:"Freddo Cappuccino",cat:"Cold drinks",price:3.50},{id:5,name:"Iced Latte",cat:"Cold drinks",price:3.80},{id:6,name:"Cold Brew",cat:"Cold drinks",price:4.00},{id:7,name:"Avocado Toast",cat:"Brunch",price:7.90},{id:8,name:"Pancakes",cat:"Brunch",price:8.50},{id:9,name:"Eggs Benedict",cat:"Brunch",price:9.50},{id:10,name:"Club Sandwich",cat:"Snacks",price:8.90},{id:11,name:"Croissant",cat:"Snacks",price:2.80},{id:12,name:"Cheesecake",cat:"Desserts",price:5.20}];
+let state=JSON.parse(localStorage.getItem("mokaMenuAvailability")||"{}"),cat="All";
+function isAvailable(id){return state[id]!==false}
+function save(){localStorage.setItem("mokaMenuAvailability",JSON.stringify(state))}
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=PRODUCTS.filter(p=>(cat==="All"||p.cat===cat)&&p.name.toLowerCase().includes(q));
+ document.getElementById("total").textContent=PRODUCTS.length;
+ document.getElementById("available").textContent=PRODUCTS.filter(p=>isAvailable(p.id)).length;
+ document.getElementById("unavailable").textContent=PRODUCTS.filter(p=>!isAvailable(p.id)).length;
+ document.getElementById("menu").innerHTML=list.length?list.map(p=>{const ok=isAvailable(p.id);return '<div class="item"><div class="left"><span class="dot '+(ok?"":"off")+'"></span><div><div class="name">'+p.name+'</div><div class="meta">'+p.cat+'</div></div></div><div><span class="price">€'+p.price.toFixed(2).replace(".",",")+'</span><button class="toggle '+(ok?"":"off")+'" onclick="toggle('+p.id+')">'+(ok?"Available":"Unavailable")+'</button></div></div>'}).join(""):'<div class="empty">Δεν βρέθηκαν προϊόντα.</div>';
+}
+function toggle(id){state[id]=!isAvailable(id);save();render()}
+function setupFilters(){const cats=["All","Coffee","Cold drinks","Brunch","Snacks","Desserts"];document.getElementById("filters").innerHTML=cats.map(x=>'<button class="filter '+(x===cat?"active":"")+'" onclick="cat=\''+x+'\';setupFilters();render()">'+x+'</button>').join("")}
+document.getElementById("search").addEventListener("input",render);setupFilters();render();
+</script>
+</body></html>
