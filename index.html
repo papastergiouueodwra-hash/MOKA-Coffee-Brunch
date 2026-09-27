@@ -154,7 +154,8 @@ function ask(){
  const input=document.getElementById("question"),q=input.value.trim();if(!q)return;
  const l=q.toLowerCase(),n=l.normalize("NFD").replace(/[\u0300-\u036f]/g,""),m=document.getElementById("msgs");
  let a="Μπορώ να σε βοηθήσω με το μενού, τις επιλογές vegan, το ωράριο, τις κρατήσεις και τις παραγγελίες.";
- if(n.includes("γλουτεν")||n.includes("gluten"))a="Ναι, φυσικά! Έχουμε και επιλογές χωρίς γλουτένη. Ενδεικτικά, μπορείς να επιλέξεις ένα gluten-free avocado toast, ένα γιαούρτι με φρούτα και granola χωρίς γλουτένη ή ένα gluten-free cheesecake. Αν έχεις αλλεργία ή δυσανεξία, ενημέρωσέ μας πριν την παραγγελία ώστε να ελέγξουμε και την πιθανή επιμόλυνση.";
+ if(n.includes("καφε")||n.includes("coffee")||n.includes("εσπρεσο")||n.includes("espresso")||n.includes("καπουτσινο")||n.includes("cappuccino")||n.includes("freddo")||n.includes("λατε")||n.includes("latte"))a="Φυσικά! Στο MOKA έχουμε Espresso (€2,20), Double Espresso (€2,80), Cappuccino (€3,20), Freddo Cappuccino (€3,50), Iced Latte (€3,80) και Cold Brew (€4,00). Μπορείς επίσης να προσαρμόσεις το ρόφημά σου με διαφορετικό μέγεθος, γάλα και extras.";
+ else if(n.includes("γλουτεν")||n.includes("gluten"))a="Ναι, φυσικά! Έχουμε και επιλογές χωρίς γλουτένη. Ενδεικτικά, μπορείς να επιλέξεις ένα gluten-free avocado toast, ένα γιαούρτι με φρούτα και granola χωρίς γλουτένη ή ένα gluten-free cheesecake. Αν έχεις αλλεργία ή δυσανεξία, ενημέρωσέ μας πριν την παραγγελία ώστε να ελέγξουμε και την πιθανή επιμόλυνση.";
  else if(l.includes("vegan")||l.includes("βίγκαν")||l.includes("γάλα")||l.includes("milk"))a="Φυσικά! Διαθέτουμε γάλα βρώμης, αμυγδάλου και καρύδας. Αν θέλεις, μπορώ να σε βοηθήσω και με συγκεκριμένα πιάτα του μενού.";
  else if(l.includes("freddo")||l.includes("φρέντο"))a="Το Freddo Cappuccino κοστίζει €3,50.";
  else if(l.includes("hour")||l.includes("ωράριο")||l.includes("ανοιχτ")||l.includes("λειτουργ"))a="Είμαστε ανοιχτά καθημερινά, από τις 08:00 έως τις 22:00.";
