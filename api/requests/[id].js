@@ -1,0 +1,3 @@
+import { neon } from "@neondatabase/serverless";
+const sql=neon(process.env.DATABASE_URL);
+export default async function handler(req,res){res.setHeader("Cache-Control","no-store");try{if(req.method!=="PATCH")return res.status(405).json({error:"Method not allowed"});const id=decodeURIComponent(req.query.id);const status=req.body?.status;const allowed=["New","In progress","Resolved"];if(!allowed.includes(status))return res.status(400).json({error:"Invalid status"});const rows=await sql`UPDATE moka_requests SET status=${status} WHERE id=${id} RETURNING *`;if(!rows.length)return res.status(404).json({error:"Request not found"});return res.status(200).json({id:rows[0].id,status:rows[0].status})}catch(e){console.error(e);return res.status(500).json({error:"Database error"})}}
