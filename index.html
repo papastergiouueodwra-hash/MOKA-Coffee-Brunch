@@ -100,7 +100,7 @@ function renderMenu(cat="all"){
  const list=cat==="all"?PRODUCTS:PRODUCTS.filter(p=>p.cat===cat);
  document.getElementById("menuGrid").innerHTML=list.map(p=>{
   const available=isProductAvailable(p.id);
-  return `<article class="product ${available?"":"unavailable"}"><div class="productImg" style="background-image:url('${p.img}')"></div><div class="productBody"><span class="tag">${p.tag}</span><h3>${p.name}</h3><p>${available?p.desc:"Μη διαθέσιμο αυτή τη στιγμή"}</p><div class="productFoot"><span class="price">${euro(p.price)}</span><button class="add" ${available?'onclick="openProduct('+p.id+')" disabled':''}>${available?"+":"—"}</button></div></div></article>`
+  return `<article class="product ${available?"":"unavailable"}"><div class="productImg" style="background-image:url('${p.img}')"></div><div class="productBody"><span class="tag">${p.tag}</span><h3>${p.name}</h3><p>${available?p.desc:"Μη διαθέσιμο αυτή τη στιγμή"}</p><div class="productFoot"><span class="price">${euro(p.price)}</span><button class="add" ${available?'onclick="openProduct('+p.id+')"' :"disabled"}>${available?"+":"—"}</button></div></div></article>`
  }).join("");
 }
 document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderMenu(b.dataset.cat)});
