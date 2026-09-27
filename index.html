@@ -138,10 +138,17 @@ function changeQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);update
 function goCheckout(){if(!cart.length){toast("Your cart is empty");return}closeModal("cartModal");document.getElementById("checkoutModal").classList.add("open")}
 function selectType(btn){document.querySelectorAll("[data-type]").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");activeType=btn.dataset.type}
 function placeOrder(){
- const name=document.getElementById("oName").value.trim();if(!name){toast("Please add your name");return}
+ const name=document.getElementById("oName").value.trim(),phone=document.getElementById("oPhone").value.trim(),address=document.getElementById("oAddress").value.trim(),payment=document.getElementById("oPayment").value;
+ if(!name){toast("Please add your name");return}
+ if(!phone){toast("Please add your phone");return}
+ if(activeType==="Delivery"&&!address){toast("Please add your delivery address");return}
  const id="MOKA-"+Math.floor(1000+Math.random()*9000);
  const total=cart.reduce((s,x)=>s+(x.unitPrice??PRODUCTS.find(p=>p.id===x.id).price)*x.qty,0);
- document.getElementById("checkoutContent").innerHTML=`<div class="success"><div class="successMark">✓</div><h2>Order confirmed!</h2><p class="muted">Thanks, ${name}. Your ${activeType.toLowerCase()} order is on its way.</p><div class="orderNo">#${id} · ${euro(total)}</div><p><b>Estimated time: 15–20 min</b></p><p class="muted">This is a demo checkout — no real payment was charged.</p><div class="modalActions"><button class="btn alt" onclick="closeModal('checkoutModal');location.hash='home'">Back to MOKA</button></div></div>`;
+ const items=cart.map(x=>{const p=PRODUCTS.find(y=>y.id===x.id);const details=[x.sugar&&x.sugar!=="No sugar"?"Sugar: "+x.sugar:"",x.notes].filter(Boolean).join(" · ");return {id:p.id,name:p.name,qty:x.qty,unitPrice:x.unitPrice??p.price,details}});
+ const orders=JSON.parse(localStorage.getItem("mokaOrders")||"[]");
+ orders.unshift({id,createdAt:new Date().toISOString(),status:"Pending",type:activeType,payment,name,customerName:name,phone,address,items,total});
+ localStorage.setItem("mokaOrders",JSON.stringify(orders));
+ document.getElementById("checkoutContent").innerHTML=`<div class="success"><div class="successMark">✓</div><h2>Order confirmed!</h2><p class="muted">Thanks, ${name}. Your ${activeType.toLowerCase()} order is on its way.</p><div class="orderNo">#${id} · ${euro(total)}</div><p><b>Estimated time: ${activeType==="Delivery"?"25–30 min":"15–20 min"}</b></p><p class="muted">This is a demo checkout — no real payment was charged.</p><div class="modalActions"><button class="btn alt" onclick="closeModal('checkoutModal');location.hash='home'">Back to MOKA</button></div></div>`;
  cart=[];updateCart();
 }
 function reserve(){
