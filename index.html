@@ -101,6 +101,7 @@ function renderMenu(cat="all"){
 document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{document.querySelectorAll(".cat").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderMenu(b.dataset.cat)});
 function openProduct(id){
  const p=PRODUCTS.find(x=>x.id===id);
+ if(!p) return;
  document.getElementById("productContent").innerHTML=`<span class="tag">${p.tag}</span><h2>${p.name}</h2><p class="muted">${p.desc} · ${euro(p.price)}</p><div class="field" style="margin-top:22px"><label>Size</label><div class="optionRow"><button class="option selected">Regular</button><button class="option">Large +€0.50</button></div></div><div class="field"><label>Milk</label><div class="optionRow"><button class="option selected">Regular</button><button class="option">Oat +€0.50</button><button class="option">Almond +€0.50</button><button class="option">Coconut +€0.50</button></div></div><div class="field"><label>Sugar</label><select><option>No sugar</option><option>1</option><option>2</option><option>3</option></select></div><div class="field"><label>Extras</label><div class="optionRow"><button class="option">Extra shot +€0.70</button><button class="option">Caramel +€0.50</button><button class="option">Vanilla +€0.50</button></div></div><div class="field"><label>Notes</label><textarea rows="3" placeholder="Anything we should know?"></textarea></div><div class="modalActions"><button class="btn alt" onclick="addToCart(${p.id})">Add to cart · ${euro(p.price)}</button></div>`;
  document.getElementById("productModal").classList.add("open");
 }
