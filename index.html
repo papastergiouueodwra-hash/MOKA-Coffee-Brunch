@@ -106,14 +106,27 @@ function openProduct(id){
  document.getElementById("productModal").classList.add("open");
 }
 function selectOption(btn){btn.parentElement.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected")}
-function addToCart(id){const p=PRODUCTS.find(x=>x.id===id);const found=cart.find(x=>x.id===id);if(found)found.qty++;else cart.push({id:p.id,qty:1});closeModal("productModal");updateCart();toast(p.name+" added to your order");}
+function optionPrice(text){const m=text.match(/\+(?:€|EUR)([0-9.]+)/i);return m?parseFloat(m[1]):0}
+function addToCart(id){
+ const p=PRODUCTS.find(x=>x.id===id);if(!p)return;
+ const modal=document.getElementById("productContent");
+ let extra=0;
+ modal.querySelectorAll(".option.selected").forEach(x=>{extra+=optionPrice(x.textContent)});
+ const sugar=modal.querySelector("select")?.value||"No sugar";
+ const notes=modal.querySelector("textarea")?.value.trim()||"";
+ const unitPrice=p.price+extra;
+ const key=id+"|"+unitPrice+"|"+sugar+"|"+notes;
+ const found=cart.find(x=>x.key===key);
+ if(found)found.qty++;else cart.push({key,id:p.id,qty:1,unitPrice,sugar,notes});
+ closeModal("productModal");updateCart();toast(p.name+" added to your order");
+}
 function updateCart(){document.getElementById("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0);}
 function openCart(){renderCart();document.getElementById("cartModal").classList.add("open")}
 function renderCart(){
  const box=document.getElementById("cartItems");
  if(!cart.length){box.innerHTML='<p class="muted" style="padding:25px 0">Your cart is empty. Pick something delicious from the menu.</p>';document.getElementById("cartTotal").innerHTML="";return}
  let total=0;
- box.innerHTML=cart.map((x,i)=>{const p=PRODUCTS.find(y=>y.id===x.id);total+=p.price*x.qty;return `<div class="cartItem"><div><b>${p.name}</b><div class="muted">${euro(p.price)} each</div></div><div class="qty"><button onclick="changeQty(${i},-1)">−</button><b>${x.qty}</b><button onclick="changeQty(${i},1)">+</button><b style="margin-left:8px">${euro(p.price*x.qty)}</b></div></div>`}).join("");
+ box.innerHTML=cart.map((x,i)=>{const p=PRODUCTS.find(y=>y.id===x.id);const unit=x.unitPrice??p.price;total+=unit*x.qty;return `<div class="cartItem"><div><b>${p.name}</b><div class="muted">${euro(unit)} each${x.sugar&&x.sugar!=="No sugar"?" · Sugar: "+x.sugar:""}${x.notes?" · "+x.notes:""}</div></div><div class="qty"><button onclick="changeQty(${i},-1)">−</button><b>${x.qty}</b><button onclick="changeQty(${i},1)">+</button><b style="margin-left:8px">${euro(unit*x.qty)}</b></div></div>`}).join("");
  document.getElementById("cartTotal").innerHTML=`<div style="display:flex;justify-content:space-between;font-size:18px"><span>Total</span><b>${euro(total)}</b></div>`;
 }
 function changeQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);updateCart();renderCart()}
@@ -122,7 +135,7 @@ function selectType(btn){document.querySelectorAll("[data-type]").forEach(x=>x.c
 function placeOrder(){
  const name=document.getElementById("oName").value.trim();if(!name){toast("Please add your name");return}
  const id="MOKA-"+Math.floor(1000+Math.random()*9000);
- const total=cart.reduce((s,x)=>s+PRODUCTS.find(p=>p.id===x.id).price*x.qty,0);
+ const total=cart.reduce((s,x)=>s+(x.unitPrice??PRODUCTS.find(p=>p.id===x.id).price)*x.qty,0);
  document.getElementById("checkoutContent").innerHTML=`<div class="success"><div class="successMark">✓</div><h2>Order confirmed!</h2><p class="muted">Thanks, ${name}. Your ${activeType.toLowerCase()} order is on its way.</p><div class="orderNo">#${id} · ${euro(total)}</div><p><b>Estimated time: 15–20 min</b></p><p class="muted">This is a demo checkout — no real payment was charged.</p><div class="modalActions"><button class="btn alt" onclick="closeModal('checkoutModal');location.hash='home'">Back to MOKA</button></div></div>`;
  cart=[];updateCart();
 }
