@@ -154,7 +154,8 @@ function ask(){
  const input=document.getElementById("question"),q=input.value.trim();if(!q)return;
  const l=q.toLowerCase(),m=document.getElementById("msgs");
  let a="Μπορώ να σε βοηθήσω με το μενού, τις επιλογές vegan, το ωράριο, τις κρατήσεις και τις παραγγελίες.";
- if(l.includes("vegan")||l.includes("βίγκαν")||l.includes("γάλα")||l.includes("milk"))a="Φυσικά! Διαθέτουμε γάλα βρώμης, αμυγδάλου και καρύδας. Αν θέλεις, μπορώ να σε βοηθήσω και με συγκεκριμένα πιάτα του μενού.";
+ if(l.includes("γλουτεν")||l.includes("gluten")||l.includes("χωρίς γλουτένη")||l.includes("χωρις γλουτενη"))a="Ναι, φυσικά! Έχουμε και επιλογές χωρίς γλουτένη. Ενδεικτικά, μπορείς να επιλέξεις ένα gluten-free avocado toast, ένα γιαούρτι με φρούτα και granola χωρίς γλουτένη ή ένα gluten-free cheesecake. Αν έχεις αλλεργία ή δυσανεξία, ενημέρωσέ μας πριν την παραγγελία ώστε να ελέγξουμε και την πιθανή επιμόλυνση.";
+ else if(l.includes("vegan")||l.includes("βίγκαν")||l.includes("γάλα")||l.includes("milk"))a="Φυσικά! Διαθέτουμε γάλα βρώμης, αμυγδάλου και καρύδας. Αν θέλεις, μπορώ να σε βοηθήσω και με συγκεκριμένα πιάτα του μενού.";
  else if(l.includes("freddo")||l.includes("φρέντο"))a="Το Freddo Cappuccino κοστίζει €3,50.";
  else if(l.includes("hour")||l.includes("ωράριο")||l.includes("ανοιχτ")||l.includes("λειτουργ"))a="Είμαστε ανοιχτά καθημερινά, από τις 08:00 έως τις 22:00.";
  else if(l.includes("reserve")||l.includes("κρατ")||l.includes("τραπέζ"))a="Βεβαίως! Μπορείς να κάνεις κράτηση από την ενότητα «Κρατήσεις», επιλέγοντας ημερομηνία, ώρα και αριθμό ατόμων.";
